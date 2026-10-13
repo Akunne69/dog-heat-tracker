@@ -70,6 +70,44 @@
         <input id="importBackupFile" type="file" accept="application/json,.json" class="hidden">
       </div>
     </section>
+    <section id="aiAssistant" class="ai-panel">
+  <div class="section-heading" style="margin-top:0">
+    <div>
+      <p class="eyebrow">PET CARE SUPPORT</p>
+      <h2>Ask the AI assistant</h2>
+    </div>
+    <span aria-hidden="true">🐾</span>
+  </div>
+
+  <p class="ai-intro">
+    Ask general questions about dog heat cycles and pet care.
+    For urgent symptoms, contact a veterinarian.
+  </p>
+
+  <div id="aiMessages" class="ai-messages" role="log"
+       aria-live="polite" aria-label="AI conversation">
+    <div class="ai-message assistant">
+      Hello! I'm your Dog Heat Tracker assistant. What would you like to know?
+    </div>
+  </div>
+
+  <form id="aiForm" class="ai-form">
+    <label for="aiQuestion" class="hidden">Your question</label>
+    <textarea id="aiQuestion" rows="2" maxlength="4000"
+      placeholder="Ask about dog heat cycles or pet care..."
+      required></textarea>
+    <button id="aiSendBtn" class="primary-btn" type="submit">Send</button>
+  </form>
+
+  <p id="aiStatus" class="ai-status" role="status" aria-live="polite">
+    AI answers require an internet connection.
+  </p>
+
+  <p class="ai-privacy">
+    Do not enter personal or sensitive information. Questions are sent to an
+    external AI service. AI responses are general information, not veterinary diagnosis.
+  </p>
+</section>
     <section class="safety-note">
       <strong>🐾 A helpful reminder</strong>
       <p>Heat timing varies between dogs. Calendar predictions are estimates, not proof of fertility or safety. Keep a dog in heat away from unneutered males and contact a vet if she seems unwell.</p>
