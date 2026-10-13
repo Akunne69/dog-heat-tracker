@@ -101,6 +101,7 @@ document.getElementById("importBackupFile").onchange=async e=>{
     selectedDogId=null;saveDogs();showToast("Backup restored successfully.");
   }catch(err){showToast(err.message||"Could not read that backup file.");}
   finally{e.target.value="";}
+  };
   /* Dog Heat Tracker AI Assistant */
 console.log("Dog Heat Tracker AI code loaded");
   (() => {
@@ -191,4 +192,4 @@ if (!form || !input || !messages || !status || !send) {
   });
 })();
   
-};
+
