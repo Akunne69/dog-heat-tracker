@@ -102,7 +102,8 @@ document.getElementById("importBackupFile").onchange=async e=>{
   }catch(err){showToast(err.message||"Could not read that backup file.");}
   finally{e.target.value="";}
   /* Dog Heat Tracker AI Assistant */
-(() => {
+console.log("Dog Heat Tracker AI code loaded");
+  (() => {
   const form = document.getElementById("aiForm");
   const input = document.getElementById("aiQuestion");
   const messages = document.getElementById("aiMessages");
