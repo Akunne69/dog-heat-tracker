@@ -113,8 +113,19 @@ console.log("Dog Heat Tracker AI code loaded");
   const endpoint =
     "https://dog-heat-tracker-api.akunneixva.workers.dev/chat";
 
-  if (!form || !input || !messages || !status || !send) return;
+  
+if (!form || !input || !messages || !status || !send) {
+  const missing = [
+    !form && "aiForm",
+    !input && "aiQuestion",
+    !messages && "aiMessages",
+    !status && "aiStatus",
+    !send && "aiSendBtn"
+  ].filter(Boolean);
 
+  alert("AI setup error: missing " + missing.join(", "));
+  return;
+}
   function addMessage(text, role, isError = false) {
     const bubble = document.createElement("div");
     bubble.className =
