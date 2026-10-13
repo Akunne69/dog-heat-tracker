@@ -1,0 +1,11 @@
+{
+  "name": "Dog Heat Tracker",
+  "short_name": "Heat Tracker",
+  "description": "Track heat cycles and reminders for all your dogs.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f7f2",
+  "theme_color": "#315c4b",
+  "icons": []
+}

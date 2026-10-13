@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#315c4b">
+  <meta name="description" content="Track heat cycles and reminders for all your dogs.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <title>Dog Heat Tracker</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">🐾</div>
+    <div><p class="eyebrow">YOUR PET CARE COMPANION</p><h1>Dog Heat Tracker</h1></div>
+    <button id="notifyBtn" class="icon-btn" aria-label="Enable notifications" title="Enable reminders">🔔</button>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <p class="eyebrow light">A LITTLE MORE PEACE OF MIND</p>
+      <h2>Every dog, one clear record.</h2>
+      <p>Track cycles, note symptoms, and plan ahead for each dog.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Summary">
+      <article class="summary-card"><span class="summary-icon">🐕</span><div><strong id="dogCount">0</strong><span>Dogs tracked</span></div></article>
+      <article class="summary-card"><span class="summary-icon">📅</span><div><strong id="upcomingCount">0</strong><span>Upcoming estimates</span></div></article>
+    </section>
+
+    <section class="section-heading">
+      <div><p class="eyebrow">YOUR FAMILY</p><h2>My dogs</h2></div>
+      <button id="addDogBtn" class="primary-btn">＋ Add dog</button>
+    </section>
+    <div id="dogList" class="dog-list"></div>
+    <div id="emptyState" class="empty-state">
+      <div class="empty-emoji">🐶</div><h3>Start with your first dog</h3>
+      <p>Add a name to create a profile. You can add as many dogs as you need.</p>
+      <button id="emptyAddBtn" class="primary-btn">Add your first dog</button>
+    </div>
+
+    <section id="detailSection" class="detail-section hidden">
+      <div class="section-heading detail-heading">
+        <div><p class="eyebrow">DOG PROFILE</p><h2 id="detailName">Dog details</h2></div>
+        <button id="closeDetailBtn" class="icon-btn" aria-label="Close details">✕</button>
+      </div>
+      <div id="detailContent"></div>
+    </section>
+
+    <section id="dogFormSection" class="form-panel hidden">
+      <div class="section-heading"><div><p class="eyebrow">NEW PROFILE</p><h2>Add a dog</h2></div><button id="cancelDogBtn" class="icon-btn" aria-label="Cancel">✕</button></div>
+      <form id="dogForm">
+        <label>Dog's name *<input id="dogName" required maxlength="50" placeholder="e.g. Bella"></label>
+        <div class="two-col">
+          <label>Breed (optional)<input id="dogBreed" maxlength="60" placeholder="e.g. Mixed breed"></label>
+          <label>Date of birth (optional)<input id="dogDob" type="date"></label>
+        </div>
+        <label>Notes (optional)<textarea id="dogNotes" rows="2" maxlength="500" placeholder="Anything useful to remember"></textarea></label>
+        <button class="primary-btn full" type="submit">Save dog profile</button>
+      </form>
+    </section>
+
+
+    <section class="form-panel backup-panel">
+      <div class="section-heading"><div><p class="eyebrow">YOUR DATA</p><h2>Backup & restore</h2></div><span>🔐</span></div>
+      <p class="muted backup-copy">Your dog records stay on this phone. Export a backup before changing phones or reinstalling the app.</p>
+      <div class="backup-actions">
+        <button id="exportBackupBtn" class="primary-btn" type="button">Export backup</button>
+        <button id="importBackupBtn" class="small-btn" type="button">Restore backup</button>
+        <input id="importBackupFile" type="file" accept="application/json,.json" class="hidden">
+      </div>
+    </section>
+    <section class="safety-note">
+      <strong>🐾 A helpful reminder</strong>
+      <p>Heat timing varies between dogs. Calendar predictions are estimates, not proof of fertility or safety. Keep a dog in heat away from unneutered males and contact a vet if she seems unwell.</p>
+    </section>
+  </main>
+  <footer>Made for caring dog owners · Your records stay on this device</footer>
+
+  <dialog id="cycleDialog">
+    <form id="cycleForm" method="dialog">
+      <div class="section-heading"><div><p class="eyebrow">CYCLE RECORD</p><h2 id="cycleDialogTitle">Record heat</h2></div><button id="closeCycleBtn" class="icon-btn" type="button" aria-label="Close">✕</button></div>
+      <input type="hidden" id="cycleDogId">
+      <label>What date did you first notice signs? *<input id="cycleObserved" type="date" required></label>
+      <p class="field-hint">If you do not know the true start date, enter the first date you noticed signs. This app will label it as observed, not confirmed.</p>
+      <label>Signs observed<select id="cycleSigns"><option>Bloody/red discharge</option><option>Vulva swelling</option><option>Both discharge and swelling</option><option>Behaviour changes</option><option>Other / unsure</option></select></label>
+      <label>Cycle status<select id="cycleStatus"><option value="active">Signs are ongoing</option><option value="ended">Signs have stopped</option></select></label>
+      <label>Notes (optional)<textarea id="cycleNotes" rows="2" maxlength="500" placeholder="Discharge, behaviour, vet advice..."></textarea></label>
+      <button class="primary-btn full" type="submit">Save cycle record</button>
+    </form>
+  </dialog>
+
+  <dialog id="editCycleDialog">
+    <form id="editCycleForm" method="dialog">
+      <div class="section-heading"><div><p class="eyebrow">UPDATE RECORD</p><h2>Update cycle</h2></div><button id="closeEditCycleBtn" class="icon-btn" type="button" aria-label="Close">✕</button></div>
+      <input type="hidden" id="editDogId"><input type="hidden" id="editCycleId">
+      <label>First observed date<input id="editObserved" type="date" required></label>
+      <label>Status<select id="editStatus"><option value="active">Signs are ongoing</option><option value="ended">Signs have stopped</option></select></label>
+      <label>Notes<textarea id="editNotes" rows="2" maxlength="500"></textarea></label>
+      <button class="primary-btn full" type="submit">Update record</button>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="native-reminders.bundle.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

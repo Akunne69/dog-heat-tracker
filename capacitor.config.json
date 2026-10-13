@@ -1,0 +1,11 @@
+{
+  "appId": "com.dogheattracker.app",
+  "appName": "Dog Heat Tracker",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_launcher"
+    }
+  }
+}
