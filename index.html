@@ -91,7 +91,7 @@
     </div>
   </div>
 
-  <form id="aiForm" class="ai-form">
+ <form id="aiForm" class="ai-form" onsubmit="event.preventDefault();"> 
     <label for="aiQuestion" class="hidden">Your question</label>
     <textarea id="aiQuestion" rows="2" maxlength="4000"
       placeholder="Ask about dog heat cycles or pet care..."
