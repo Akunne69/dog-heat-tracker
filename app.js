@@ -101,4 +101,82 @@ document.getElementById("importBackupFile").onchange=async e=>{
     selectedDogId=null;saveDogs();showToast("Backup restored successfully.");
   }catch(err){showToast(err.message||"Could not read that backup file.");}
   finally{e.target.value="";}
+  /* Dog Heat Tracker AI Assistant */
+(() => {
+  const form = document.getElementById("aiForm");
+  const input = document.getElementById("aiQuestion");
+  const messages = document.getElementById("aiMessages");
+  const status = document.getElementById("aiStatus");
+  const send = document.getElementById("aiSendBtn");
+
+  const endpoint =
+    "https://dog-heat-tracker-api.akunneixva.workers.dev/chat";
+
+  if (!form || !input || !messages || !status || !send) return;
+
+  function addMessage(text, role, isError = false) {
+    const bubble = document.createElement("div");
+    bubble.className =
+      `ai-message ${role}` + (isError ? " error" : "");
+    bubble.textContent = text;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+    return bubble;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const message = input.value.trim();
+    if (!message || send.disabled) return;
+
+    addMessage(message, "user");
+    input.value = "";
+    send.disabled = true;
+    status.textContent = "Connecting to the AI assistant...";
+
+    const loading = addMessage("Thinking...", "assistant");
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+      loading.remove();
+
+      if (!response.ok) {
+        throw new Error(
+          data.details || data.error || "The AI request failed."
+        );
+      }
+
+      if (!data.reply || typeof data.reply !== "string") {
+        throw new Error("The AI returned no answer. Please try again.");
+      }
+
+      addMessage(data.reply, "assistant");
+      status.textContent =
+        "Connected. For medical concerns, contact a veterinarian.";
+
+    } catch (error) {
+      loading.remove();
+      addMessage(
+        error.message ||
+          "Unable to connect. Check your internet and try again.",
+        "assistant",
+        true
+      );
+      status.textContent = "Unable to get an answer.";
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  });
+})();
+  
 };
